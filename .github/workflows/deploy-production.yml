@@ -1,0 +1,52 @@
+name: Deploy Porduction Frontend
+ 
+on:
+
+  push:
+
+    branches: [ "main" ]
+ 
+jobs:
+
+  deploy:
+
+    if: github.event_name != 'pull_request'
+
+    runs-on: ubuntu-latest
+ 
+    steps:
+
+      - name: Deploy to Frontend server
+
+        uses: appleboy/ssh-action@v1.2.2
+
+        with:
+
+          host: ${{ secrets.LIVE_HOST }}
+
+          username: ${{ secrets.LIVE_USERNAME }}
+
+          key: ${{ secrets.LIVE_SSH_KEY }}
+
+          port: 22
+
+          script: |
+
+            echo "Deploying to Production..."
+ 
+            cd ~/projects/live-dr-app/frontend
+ 
+            export NVM_DIR="$HOME/.nvm"
+
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            
+            git stash
+            
+            git pull origin main
+
+            npm ci
+
+            npm run build
+ 
+            pm2 reload ecosystem.config.js --env production
+ 
