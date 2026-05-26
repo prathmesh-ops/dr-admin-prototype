@@ -53,7 +53,7 @@ export const authConfig: NextAuthOptions = {
           {
             email: "pharmacy@example.com",
             password: "pharmacy123",
-            user: { id: "8", name: "Pharmacy", role: "pharmacy", department: "pharmacy" },
+            user: { id: "8", name: "Pharmacy", role: "pharmacist", department: "pharmacy" },
           },
           {
             email: "dietitian@example.com",
