@@ -43,6 +43,7 @@ import {
 } from "@/components/dietitian/patient-details";
 import { cn } from "@/lib/utils";
 import { DietPlanPhaseCard } from "@/components/dietitian/diet-plan-phase-card";
+import { PrescriptionModal } from "@/components/doctor/prescription-modal";
 
 export default function PatientDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -59,6 +60,7 @@ export default function PatientDetailsPage({ params }: { params: Promise<{ id: s
   const [rescheduleAppointmentId, setRescheduleAppointmentId] = useState<string | null>(null);
   const [showViewGoalDrawer, setShowViewGoalDrawer] = useState(false)
   const [showBodyMeasurementsDrawer, setShowBodyMeasurementsDrawer] = useState(false)
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false)
   const [rescheduleForm, setRescheduleForm] = useState({
     appointmentDate: new Date().toISOString().split("T")[0],
     slotId: "",
@@ -516,6 +518,13 @@ export default function PatientDetailsPage({ params }: { params: Promise<{ id: s
                 </Button>
                 <Button
                   variant="outline"
+                  onClick={() => setShowPrescriptionModal(true)}
+                  className="border-blue-200 text-blue-700 hover:bg-blue-50 bg-white shadow-sm"
+                >
+                  <FileText className="h-4 w-4 mr-2" /> Add New
+                </Button>
+                <Button
+                  variant="outline"
                   onClick={() => setShowRescheduleSheet(true)}
                   className="border-blue-200 text-blue-700 hover:bg-blue-50 bg-white shadow-sm"
                 >
@@ -794,6 +803,14 @@ export default function PatientDetailsPage({ params }: { params: Promise<{ id: s
         patientName={`${patient?.first_name} ${patient?.last_name}`}
         bodyMeasurementGoals={bodyMeasurementGoals}
         latestBodyMeasurements={latestBodyMeasurements}
+      />
+
+      <PrescriptionModal
+        open={showPrescriptionModal}
+        onOpenChange={setShowPrescriptionModal}
+        patientId={patient?.id || id}
+        patientName={patient ? `${patient.first_name} ${patient.last_name}` : "Patient"}
+        patientGender={patient?.gender}
       />
     </div>
   );

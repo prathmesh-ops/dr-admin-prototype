@@ -112,6 +112,7 @@ import { AppointmentsTimeline, SalesCallLogsCard } from "@/components/dietitian/
 import { Separator } from "@/components/ui/separator";
 import { PatientLogsTabs } from "@/components/patient-logs/patient-logs-tabs";
 import { DietPlanPhaseCard } from "@/components/dietitian/diet-plan-phase-card";
+import { PrescriptionModal } from "@/components/doctor/prescription-modal";
 
 type FoodItemEntry = {
   id: string;
@@ -199,6 +200,7 @@ export default function ConsultationPage({
   const [editingGoalValue, setEditingGoalValue] = useState("");
   const [goalFormErrors, setGoalFormErrors] = useState<Record<string, string>>({});
   const [showGuidelineModal, setShowGuidelineModal] = useState(false);
+  const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
 
 
   const handleIframeLoad = () => setIframeStatus("loaded");
@@ -1404,6 +1406,15 @@ export default function ConsultationPage({
                 Guidelines Pdfs
               </Button>
             )} */}
+
+            <Button
+              variant="outline"
+              onClick={() => setShowPrescriptionModal(true)}
+              className="border-blue-300 text-blue-700 hover:bg-blue-50 shadow-sm"
+            >
+              <FileText className="h-4 w-4 mr-2" />
+              Add New
+            </Button>
 
             <Button variant="destructive" onClick={() => setShowEndSessionConfirm(true)}>
               <PhoneOff className="h-4 w-4 mr-1" />
@@ -3403,6 +3414,14 @@ export default function ConsultationPage({
           dietPlanId={(activeDietPlan as any)?.diet_plan_id || (activeDietPlan as any)?.id}
         />
       )}
+
+      <PrescriptionModal
+        open={showPrescriptionModal}
+        onOpenChange={setShowPrescriptionModal}
+        patientId={patient?.id || id}
+        patientName={patient ? `${patient.first_name} ${patient.last_name}` : "Patient"}
+        patientGender={patient?.gender}
+      />
     </div>
   );
 }
