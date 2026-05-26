@@ -33,7 +33,7 @@ const patients = [
 ]
 
 // Static data for medicines
-const medicines = [
+const medicineDatabase = [
   { id: "MED-001", name: "Metformin 500mg", category: "Diabetes", manufacturer: "Sun Pharma" },
   { id: "MED-002", name: "Atorvastatin 20mg", category: "Cardiovascular", manufacturer: "Pfizer" },
   { id: "MED-003", name: "Levothyroxine 75mcg", category: "Thyroid", manufacturer: "Abbott" },
@@ -74,7 +74,7 @@ export default function IssuePrescriptionPage() {
     m.name.toLowerCase().includes(medicineSearch.toLowerCase())
   )
 
-  const addMedicine = (medicine: typeof medicines[0]) => {
+  const addMedicine = (medicine: typeof medicineDatabase[0]) => {
     const newMedicine: MedicineItem = {
       id: medicine.id,
       name: medicine.name,
@@ -272,7 +272,7 @@ export default function IssuePrescriptionPage() {
                   />
                   {showMedicineDropdown && medicineSearch && (
                     <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {medicines
+                      {medicineDatabase
                         .filter((m) => m.name.toLowerCase().includes(medicineSearch.toLowerCase()))
                         .map((medicine) => (
                           <div
