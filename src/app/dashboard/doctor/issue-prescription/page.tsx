@@ -33,7 +33,14 @@ const patients = [
 ]
 
 // Static data for medicines
-const medicineDatabase = [
+interface MedicineCatalogItem {
+  id: string
+  name: string
+  category: string
+  manufacturer: string
+}
+
+const medicineDatabase: MedicineCatalogItem[] = [
   { id: "MED-001", name: "Metformin 500mg", category: "Diabetes", manufacturer: "Sun Pharma" },
   { id: "MED-002", name: "Atorvastatin 20mg", category: "Cardiovascular", manufacturer: "Pfizer" },
   { id: "MED-003", name: "Levothyroxine 75mcg", category: "Thyroid", manufacturer: "Abbott" },
